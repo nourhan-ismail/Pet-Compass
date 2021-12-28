@@ -5,7 +5,7 @@ const PetOwner = require("../models/PetOwner");
 const petOwnerRouter = Router();
 
 //pet-owner can search for another pet-owner by their username
-petOwnerRouter.get('/pet-owners:petOwnerId',petOwnerController.getPetOwnerProfile);
+petOwnerRouter.get('/:petOwnerId',petOwnerController.getPetOwnerProfile);
 
 //pet-owner can retrive pets of another pet-owner
 

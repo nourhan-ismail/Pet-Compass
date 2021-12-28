@@ -1,10 +1,10 @@
 const { PetOwner } = require("../models/PetOwner");
 
 module.exports.getPetOwnerProfile = async (res, req, next) => {
-    const id = req.body.id;
-    let petOwner;
+
+    const id = req.params.petOwnerId;
     try {
-        petOwner = await PetOwner.findOne({})
+        let petOwner = await PetOwner.findOne
         
     } catch (error) {
         

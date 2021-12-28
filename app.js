@@ -2,10 +2,10 @@ const path = require("path");
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const petOwnerRouter = require("./routes/petOwner");
 
 //loading environment variables
-
 dotenv.config({ path: "./config/config.env" });
 
 const app = express();
@@ -16,6 +16,6 @@ app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
 app.use(express.json());
 app.use(cors());
 
+app.use("/pet-owners", petOwnerRouter);
 
-//connecting to mongoose DB
-mongoose.connect("mongodb+srv://nourhan:test123@cluster0.vbktc.mongodb.net/PetCompass?retryWrites=true&w=majority");
+//database connection
