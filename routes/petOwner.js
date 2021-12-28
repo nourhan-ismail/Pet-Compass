@@ -1,11 +1,12 @@
 const Router = require("express");
 const petOwnerController = require("../controllers/petOwnerController");
 const PetOwner = require("../models/PetOwner");
+const checkPetOwnerAuth = require("../middlewares/auth");
 
 const petOwnerRouter = Router();
 
 //pet-owner can search for another pet-owner by their username
-petOwnerRouter.get('/:petOwnerUsername',petOwnerController.getPetOwnerProfile);
+petOwnerRouter.get("/:petOwnerUsername", petOwnerController.getPetOwnerProfile);
 
 //pet-owner can retrive pets of another pet-owner
 
@@ -14,6 +15,10 @@ petOwnerRouter.get('/:petOwnerUsername',petOwnerController.getPetOwnerProfile);
 //pet-owner can add a post on their own profile
 
 //pet-owner can add a new pet on their own profile
-petOwnerRouter.post("/:petOwnerUsername/pets", petOwnerController.addNewPet);
+petOwnerRouter.post(
+  "/:petOwnerUsername/pets",
+  checkPetOwnerAuth,
+  petOwnerController.addNewPet
+);
 
 module.exports = petOwnerRouter;

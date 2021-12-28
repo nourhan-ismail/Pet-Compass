@@ -1,5 +1,4 @@
 const PetOwner = require("../models/PetOwner");
-const axios = require("axios");
 
 //get specific pet owner profile
 
@@ -16,32 +15,38 @@ module.exports.getPetOwnerProfile = async (req, res, next) => {
 };
 
 module.exports.addNewPet = async (req, res, next) => {
-  const { petName, petType, breed, petAge, color, photoURL } = req.body;
+  const { petName, petType, petBreed, petAge, petColor } = req.body;
 
-  let username;
-  const token = req.headers.authorization.split(" ")[1];
-  let response;
-  try {
-    response = await axios.get("http://localhost:4000/auth", {
-      headers: {
-        Authorization: `BEARER ${token}`,
-      },
-    });
-  } catch (error) {
-    res.status(403).json({ error: "Authentication Failed" });
-  }
-
-console.log(response);
-
-  //username = response.username;
-  //console.log(username);
+  const petOwnerUsername = req.username;
 
   let petOwner;
   //get current pet owner
   try {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      error: "Server error, could not add you pet."
+    });
+  }
 
-  //get pets of this pet owner
-  //add pet to the list of pets
+  petOwner.pets.push({
+    name: petName,
+    type: petType,
+    breed: petBreed,
+    age: petAge,
+    color: petColor
+  });
+
+  try {
+    await petOwner.save();
+  } catch (error) {
+    res.status(500).send({
+      error: "Server error, could not add you pet."
+    });
+  }
+
+  res.send({
+    message: "Pet added successfully."
+  });
 };
