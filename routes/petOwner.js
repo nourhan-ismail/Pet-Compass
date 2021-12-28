@@ -8,7 +8,11 @@ const petOwnerRouter = Router();
 //pet-owner can search for another pet-owner by their username
 petOwnerRouter.get("/:petOwnerUsername", petOwnerController.getPetOwnerProfile);
 
-//pet-owner can retrive pets of another pet-owner
+//pet-owner can retrive pets of a pet-owner
+petOwnerRouter.get(
+  "/:petOwnerUsername/pets",
+  petOwnerController.getPetOwnerPets
+);
 
 //pet-owner can retrive posts of another pet-owner
 
@@ -20,5 +24,37 @@ petOwnerRouter.post(
   checkPetOwnerAuth,
   petOwnerController.addNewPet
 );
+
+//pet-owner can delete a pet he has
+petOwnerRouter.delete(
+  "/:petOwnerUsername/pets",
+  checkPetOwnerAuth,
+  petOwnerController.deletePet
+);
+
+petOwnerRouter.patch(
+  "/:petOwnerUsername",
+  checkPetOwnerAuth,
+  petOwnerController.updateProfile
+);
+
+petOwnerRouter.post(
+  "/:petOwnerUsername/posts",
+  checkPetOwnerAuth,
+  petOwnerController.createPost
+);
+
+petOwnerRouter.get(
+  "/:petOwnerUsername/posts",
+  petOwnerController.getPetOwnerPosts
+);
+
+petOwnerRouter.delete(
+  "/:petOwnerUsername/posts",
+  checkPetOwnerAuth,
+  petOwnerController.deletePost
+);
+
+petOwnerRouter.get("/", petOwnerController.getPetOwners);
 
 module.exports = petOwnerRouter;
