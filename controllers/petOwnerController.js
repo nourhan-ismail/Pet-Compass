@@ -1,18 +1,28 @@
-const { PetOwner } = require("../models/PetOwner");
+const PetOwner = require("../models/PetOwner");
 
-module.exports.getPetOwnerProfile = async (res, req, next) => {
+//get specific pet owner profile
 
-    const id = req.params.petOwnerId;
-    try {
-        let petOwner = await PetOwner.findOne
-        
-    } catch (error) {
-        
-    }
+module.exports.getPetOwnerProfile = async (req, res, next) => {
+  const petOwnerUsername = req.params.petOwnerUsername;
+  try {
+    let petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    console.log(petOwner);
+    res.status(200).json(petOwner);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "server error" });
+  }
 };
 
-module.exports.addNewPet = (req, res, next) => {
+module.exports.addNewPet = async (req, res, next) => {
   const { petName, petType, breed, petAge, color, photoURL } = req.body;
+  let petOwner;
+  //get current pet owner
+  try {
+    petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    
+  } catch (error) {}
 
-  //const currentPets = currentPetOwner.
+  //get pets of this pet owner
+  //add pet to the list of pets
 };

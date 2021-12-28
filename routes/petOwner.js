@@ -5,7 +5,7 @@ const PetOwner = require("../models/PetOwner");
 const petOwnerRouter = Router();
 
 //pet-owner can search for another pet-owner by their username
-petOwnerRouter.get('/:petOwnerId',petOwnerController.getPetOwnerProfile);
+petOwnerRouter.get('/:petOwnerUsername',petOwnerController.getPetOwnerProfile);
 
 //pet-owner can retrive pets of another pet-owner
 
@@ -14,6 +14,6 @@ petOwnerRouter.get('/:petOwnerId',petOwnerController.getPetOwnerProfile);
 //pet-owner can add a post on their own profile
 
 //pet-owner can add a new pet on their own profile
-petOwnerRouter.post("/", petOwnerController.addNewPet);
+//petOwnerRouter.post("/", petOwnerController.addNewPet);
 
 module.exports = petOwnerRouter;
