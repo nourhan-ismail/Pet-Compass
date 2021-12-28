@@ -14,6 +14,6 @@ petOwnerRouter.get('/:petOwnerUsername',petOwnerController.getPetOwnerProfile);
 //pet-owner can add a post on their own profile
 
 //pet-owner can add a new pet on their own profile
-//petOwnerRouter.post("/", petOwnerController.addNewPet);
+petOwnerRouter.post("/:petOwnerUsername/pets", petOwnerController.addNewPet);
 
 module.exports = petOwnerRouter;
