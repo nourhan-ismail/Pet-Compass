@@ -1,4 +1,4 @@
-POST http://localhost:3000/pet-owners/zS/pets HTTP/1.1
+POST http://localhost:3000/pet-owners/zSorour/pets HTTP/1.1
 Content-Type: application/json
 Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZTFmOGFlNTkwNzU5M2RkYmE1NWYiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA3NzAxMDgsImV4cCI6MTY0MDc3MzcwOH0.uzyWJQakb_7RbaqtK7XsPtjynwUZ-6_UpuZboHDkQ1Q
 

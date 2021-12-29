@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
+const multer = require('multer');
 const PetOwner = require("../models/PetOwner");
 
 //get specific pet owner profile
