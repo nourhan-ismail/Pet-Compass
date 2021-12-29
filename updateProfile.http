@@ -3,5 +3,7 @@ Content-Type: application/json
 Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZTFmOGFlNTkwNzU5M2RkYmE1NWYiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA3NjU2MDMsImV4cCI6MTY0MDc2OTIwM30.eY0s-aXfhNXTvZRP3Ho71iBbSmfCRBS9LG5i1SVmmd8
 
 {
-    "name": ""
+    "name": "Ahmad Sorour",
+    "phoneNumber": "01024661195",
+    "email": "ahmad_sorour@outlook.com"
 }

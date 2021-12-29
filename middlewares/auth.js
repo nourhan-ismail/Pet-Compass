@@ -38,9 +38,9 @@ module.exports.addPetValidator = () => [
 ];
 
 //updating profile
-module.exports.updatePetOwnerProfileValidator = (req, res,next) => {
+module.exports.updatePetOwnerProfileValidator = () => {
   const validators = [];
-  if (req.name) {
+  if (check("haha")) {
     validators.push(
       check("name").notEmpty().withMessage("Name cannot be empty")
     );

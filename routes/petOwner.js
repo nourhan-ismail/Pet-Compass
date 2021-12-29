@@ -32,7 +32,6 @@ petOwnerRouter.delete(
 petOwnerRouter.patch(
   "/:petOwnerUsername",
   checkPetOwnerAuth,
-  (req, res,next) => checkPetOwnerAuth.updatePetOwnerProfileValidator(req, res,next),
   petOwnerController.updateProfile
 );
 
