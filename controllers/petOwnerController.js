@@ -173,6 +173,15 @@ module.exports.updateProfile = async (req, res, next) => {
 };
 
 module.exports.createPost = async (req, res, next) => {
+  const { errors } = validationResult(req);
+  if (errors.length > 0) {
+    const errorMessages = errors.map((err) => err.msg);
+    return res.status(422).send({
+      message: "Creating a post process failed, please try again later.",
+      errors: errorMessages
+    });
+  }
+
   const petOwnerUsername = req.username;
 
   const { body } = req.body;

@@ -2,6 +2,7 @@ const Router = require("express");
 const petOwnerController = require("../controllers/petOwnerController");
 const PetOwner = require("../models/PetOwner");
 const checkPetOwnerAuth = require("../middlewares/auth");
+const checkPetOwnerValidator = require("../middlewares/PetOwnerValidators");
 
 const petOwnerRouter = Router();
 
@@ -18,7 +19,7 @@ petOwnerRouter.get(
 petOwnerRouter.post(
   "/:petOwnerUsername/pets",
   checkPetOwnerAuth,
-  checkPetOwnerAuth.addPetValidator(),
+  checkPetOwnerValidator.addPetValidator(),
   petOwnerController.addNewPet
 );
 
@@ -38,7 +39,7 @@ petOwnerRouter.patch(
 petOwnerRouter.post(
   "/:petOwnerUsername/posts",
   checkPetOwnerAuth,
-  checkPetOwnerAuth.addPostValidator(),
+  checkPetOwnerValidator.addPostValidator(),
   petOwnerController.createPost
 );
 
