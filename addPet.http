@@ -6,6 +6,6 @@ Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZ
     "petName":"Dora",
     "petType": "Cat",
     "petBreed": "Mau",
-    "petAge": 4,
-    "petColor": "red"
+    "petAge": 1,
+    "petColor": "white"
 }

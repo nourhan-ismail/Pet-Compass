@@ -17,6 +17,17 @@ module.exports.getPetOwnerProfile = async (req, res, next) => {
 };
 
 module.exports.addNewPet = async (req, res, next) => {
+
+const petOwnerUsername = req.username;
+const targetPetOwnerUsername = req.params.petOwnerUsername;
+
+if(petOwnerUsername !== targetPetOwnerUsername){
+  return res.status(401).send({
+    error: "Unathorized access"
+  })
+}
+
+
   const { errors } = validationResult(req);
   if (errors.length > 0) {
     const errorMessages = errors.map((err) => err.msg);
@@ -28,7 +39,7 @@ module.exports.addNewPet = async (req, res, next) => {
 
   const { petName, petType, petBreed, petAge, petColor } = req.body;
 
-  const petOwnerUsername = req.username;
+ 
 
   let petOwner;
   //get current pet owner
