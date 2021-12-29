@@ -23,7 +23,7 @@ module.exports.addNewPet = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unathorized access",
+      error: "Unathorized access"
     });
   }
 
@@ -32,7 +32,7 @@ module.exports.addNewPet = async (req, res, next) => {
     const errorMessages = errors.map((err) => err.msg);
     return res.status(422).send({
       message: "Adding a new pet process failed, please try again later.",
-      errors: errorMessages,
+      errors: errorMessages
     });
   }
 
@@ -46,7 +46,7 @@ module.exports.addNewPet = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      error: "Server error, could not add you pet.",
+      error: "Server error, could not add you pet."
     });
   }
 
@@ -55,7 +55,7 @@ module.exports.addNewPet = async (req, res, next) => {
     type: petType,
     breed: petBreed,
     age: petAge,
-    color: petColor,
+    color: petColor
     //imageURL: petImage,
   });
 
@@ -63,12 +63,12 @@ module.exports.addNewPet = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not add you pet.",
+      error: "Server error, could not add you pet."
     });
   }
 
   res.send({
-    message: "Pet added successfully.",
+    message: "Pet added successfully."
   });
 };
 
@@ -92,7 +92,7 @@ module.exports.deletePet = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized Access",
+      error: "Unauthorized Access"
     });
   }
   const { petID } = req.body;
@@ -112,7 +112,7 @@ module.exports.deletePet = async (req, res, next) => {
     ) === false
   ) {
     return res.status(422).send({
-      error: "Could not find pet.",
+      error: "Could not find pet."
     });
   }
 
@@ -124,13 +124,13 @@ module.exports.deletePet = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not delete your pet.",
+      error: "Server error, could not delete your pet."
     });
   }
 
   res.send({
     message: "Pet removed successfully.",
-    updatedPets: petOwner.pets,
+    updatedPets: petOwner.pets
   });
 };
 
@@ -140,7 +140,7 @@ module.exports.updateProfile = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized Access",
+      error: "Unauthorized Access"
     });
   }
   const errors = [];
@@ -164,7 +164,7 @@ module.exports.updateProfile = async (req, res, next) => {
   if (errors.length > 0) {
     return res.status(422).send({
       message: "invalid input",
-      errors: errors,
+      errors: errors
     });
   }
 
@@ -185,13 +185,13 @@ module.exports.updateProfile = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not update your profile.",
+      error: "Server error, could not update your profile."
     });
   }
 
   res.send({
     message: "Profile updated successfully.",
-    updatedProfile: petOwner,
+    updatedProfile: petOwner
   });
 };
 
@@ -201,7 +201,7 @@ module.exports.createPost = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized Access",
+      error: "Unauthorized Access"
     });
   }
 
@@ -210,7 +210,7 @@ module.exports.createPost = async (req, res, next) => {
     const errorMessages = errors.map((err) => err.msg);
     return res.status(422).send({
       message: "Creating a post process failed, please try again later.",
-      errors: errorMessages,
+      errors: errorMessages
     });
   }
 
@@ -229,20 +229,20 @@ module.exports.createPost = async (req, res, next) => {
 
   petOwner.posts.push({
     body,
-    publishDate: postCreationDate,
+    publishDate: postCreationDate
   });
 
   try {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not create your post.",
+      error: "Server error, could not create your post."
     });
   }
 
   res.send({
     message: "Post created successfully.",
-    posts: petOwner.posts,
+    posts: petOwner.posts
   });
 };
 
@@ -259,7 +259,7 @@ module.exports.getPetOwnerPosts = async (req, res, next) => {
   }
 
   res.send({
-    posts: petOwner.posts,
+    posts: petOwner.posts
   });
 };
 
@@ -269,7 +269,7 @@ module.exports.deletePost = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized Access",
+      error: "Unauthorized Access"
     });
   }
 
@@ -290,7 +290,7 @@ module.exports.deletePost = async (req, res, next) => {
     ) === false
   ) {
     return res.status(422).send({
-      error: "Could not find post.",
+      error: "Could not find post."
     });
   }
 
@@ -302,13 +302,13 @@ module.exports.deletePost = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not delete your post.",
+      error: "Server error, could not delete your post."
     });
   }
 
   res.send({
     message: "Post removed successfully.",
-    updatedPosts: petOwner.posts,
+    updatedPosts: petOwner.posts
   });
 };
 
@@ -320,7 +320,7 @@ module.exports.getPetOwners = async (req, res, next) => {
   let petOwners;
   if (petType || petBreed) {
     petOwners = await PetOwner.find({
-      $or: [{ "pets.type": petType }, { "pets.breed": petBreed }],
+      $or: [{ "pets.type": petType }, { "pets.breed": petBreed }]
     });
     try {
     } catch (error) {
@@ -335,6 +335,6 @@ module.exports.getPetOwners = async (req, res, next) => {
   }
 
   res.send({
-    petOwners: petOwners,
+    petOwners: petOwners
   });
 };

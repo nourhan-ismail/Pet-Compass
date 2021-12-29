@@ -7,6 +7,5 @@ Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZ
     "petType": "Cat",
     "petBreed": "Mau",
     "petAge": "1",
-    "petColor": "black",
-    
+    "petColor": "black"
 }
