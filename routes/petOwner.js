@@ -6,25 +6,37 @@ const PetOwner = require("../models/PetOwner");
 const checkPetOwnerAuth = require("../middlewares/auth");
 const checkPetOwnerValidator = require("../middlewares/PetOwnerValidators");
 
-
 //parse incoming form bodies
 const multer = require("multer");
-const upload = multer({ dest: 'uploads/' });
-//folder that multer will try to store the incoming files,passing a configuration
-//const upload = multer({ storage: storage });
-
-
 
 //specifying how file gets stored
-/*const storage = multer.diskStorage({
+const storage = multer.diskStorage({
   //where the incoming file should be stored
-destination: function(req,file,cb){
-cb(null,'./uploads');
-},filename: function(req,file,cb){
-  cb(null, new Date().toISOString() + file.originalname);
-}
-})*/
+  destination: function (req, file, cb) {
+    cb(null, "./uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
 
+const fileFilter = (req, file, cb) => {
+  //reject file
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+//folder that multer will try to store the incoming files,passing a configuration
+const upload = multer({
+  storage: storage,
+  limits: {
+    filseSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter, 
+});
 
 //pet-owner can search for another pet-owner by their username
 petOwnerRouter.get("/:petOwnerUsername", petOwnerController.getPetOwnerProfile);
@@ -39,7 +51,8 @@ petOwnerRouter.get(
 petOwnerRouter.post(
   "/:petOwnerUsername/pets",
   checkPetOwnerAuth,
-  checkPetOwnerValidator.addPetValidator(),upload.single('petImage'),
+  checkPetOwnerValidator.addPetValidator(),
+  //upload.single("petImage"),
   petOwnerController.addNewPet
 );
 
