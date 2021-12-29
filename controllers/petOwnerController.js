@@ -60,7 +60,7 @@ module.exports.addNewPet = async (req, res, next) => {
     breed: petBreed,
     age: petAge,
     color: petColor,
-    photoURL: petImage
+    photoURL: petImage || null
   });
 
   try {
@@ -234,7 +234,7 @@ module.exports.createPost = async (req, res, next) => {
   petOwner.posts.push({
     body,
     publishDate: postCreationDate,
-    imageURL: req.file.path
+    imageURL: req.file.path || null
   });
 
   try {
