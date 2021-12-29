@@ -24,7 +24,7 @@ module.exports.addNewPet = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unathorized access"
+      error: "Unauthorized access"
     });
   }
 
@@ -38,7 +38,10 @@ module.exports.addNewPet = async (req, res, next) => {
   }
 
   const { petName, petType, petBreed, petAge, petColor } = req.body;
+
   const petImage = req.file.path;
+
+  console.log(petImage);
 
   let petOwner;
   //get current pet owner
@@ -46,8 +49,8 @@ module.exports.addNewPet = async (req, res, next) => {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
-      error: "Server error, could not add you pet."
+    return res.status(500).send({
+      error: "Server error, could not add your pet."
     });
   }
 
@@ -57,13 +60,13 @@ module.exports.addNewPet = async (req, res, next) => {
     breed: petBreed,
     age: petAge,
     color: petColor,
-    imageURL: petImage,
+    photoURL: petImage
   });
 
   try {
     await petOwner.save();
   } catch (error) {
-    res.status(500).send({
+    return res.status(500).send({
       error: "Server error, could not add you pet."
     });
   }

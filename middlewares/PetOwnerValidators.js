@@ -3,8 +3,7 @@ const {check} = require('express-validator');
 //adding a pet
 module.exports.addPetValidator = () => [
     check("petName")
-      .notEmpty()
-      .withMessage("Pet name cannot be empty.")
+      .not().isEmpty()
       .isLength({ min: 1, max: 20 })
       .withMessage("Invalid pet name"),
     check("petType").notEmpty().withMessage("Pet type cannot be empty"),
