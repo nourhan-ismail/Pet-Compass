@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/pet-owners", petOwnerRouter);
-
+//app.use(express.static('uploads'));
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);

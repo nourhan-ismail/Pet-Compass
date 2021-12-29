@@ -3,9 +3,9 @@ Content-Type: application/json
 Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZTFmOGFlNTkwNzU5M2RkYmE1NWYiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA3NzkxMTAsImV4cCI6MTY0MDc4MjcxMH0.fimmtgLtXWO0cWxjYl5e45Xoqf19zWpttgFf5bjYQA8
 
 {
-    "petName":"Daisy",
+    "petName":"oscar",
     "petType": "Cat",
     "petBreed": "Mau",
     "petAge": "1",
-    "petColor": "black"
+    "petColor": "red"
 }

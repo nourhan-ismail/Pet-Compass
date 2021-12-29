@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
 //const multer = require("multer");
 const PetOwner = require("../models/PetOwner");
+const multer = require("multer");
 
 //get specific pet owner profile
 
@@ -37,7 +38,7 @@ module.exports.addNewPet = async (req, res, next) => {
   }
 
   const { petName, petType, petBreed, petAge, petColor } = req.body;
-  //const productImage = req.file.path;
+  const petImage = req.file.path;
 
   let petOwner;
   //get current pet owner
@@ -55,8 +56,8 @@ module.exports.addNewPet = async (req, res, next) => {
     type: petType,
     breed: petBreed,
     age: petAge,
-    color: petColor
-    //imageURL: petImage,
+    color: petColor,
+    imageURL: petImage,
   });
 
   try {

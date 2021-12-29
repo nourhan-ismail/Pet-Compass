@@ -52,7 +52,7 @@ petOwnerRouter.post(
   "/:petOwnerUsername/pets",
   checkPetOwnerAuth,
   checkPetOwnerValidator.addPetValidator(),
-  //upload.single("petImage"),
+  upload.single("petImage"),
   petOwnerController.addNewPet
 );
 
