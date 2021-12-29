@@ -89,6 +89,13 @@ module.exports.getPetOwnerPets = async (req, res, next) => {
 
 module.exports.deletePet = async (req, res, next) => {
   const petOwnerUsername = req.username;
+  const targetPetOwnerUsername = req.params.petOwnerUsername;
+
+  if(petOwnerUsername !== targetPetOwnerUsername){
+    return res.status(401).send({
+      error:"Unauthorized Access"
+    })
+  }
   const { petID } = req.body;
 
   let petOwner;
@@ -129,9 +136,15 @@ module.exports.deletePet = async (req, res, next) => {
 };
 
 module.exports.updateProfile = async (req, res, next) => {
-  const errors = [];
-
   const petOwnerUsername = req.username;
+  const targetPetOwnerUsername = req.params.petOwnerUsername;
+
+  if(petOwnerUsername !== targetPetOwnerUsername){
+    return res.status(401).send({
+      error:"Unauthorized Access"
+    })
+  }
+  const errors = [];
 
   const { name, phoneNumber, email } = req.body;
 
@@ -184,6 +197,16 @@ module.exports.updateProfile = async (req, res, next) => {
 };
 
 module.exports.createPost = async (req, res, next) => {
+
+  const petOwnerUsername = req.username;
+  const targetPetOwnerUsername = req.params.petOwnerUsername;
+
+  if(petOwnerUsername !== targetPetOwnerUsername){
+    return res.status(401).send({
+      error:"Unauthorized Access"
+    })
+  }
+
   const { errors } = validationResult(req);
   if (errors.length > 0) {
     const errorMessages = errors.map((err) => err.msg);
@@ -192,8 +215,6 @@ module.exports.createPost = async (req, res, next) => {
       errors: errorMessages
     });
   }
-
-  const petOwnerUsername = req.username;
 
   const { body } = req.body;
 
@@ -246,6 +267,14 @@ module.exports.getPetOwnerPosts = async (req, res, next) => {
 
 module.exports.deletePost = async (req, res, next) => {
   const petOwnerUsername = req.username;
+  const targetPetOwnerUsername = req.params.petOwnerUsername;
+
+  if(petOwnerUsername !== targetPetOwnerUsername){
+    return res.status(401).send({
+      error:"Unauthorized Access"
+    })
+  }
+
   const { postID } = req.body;
 
   let petOwner;

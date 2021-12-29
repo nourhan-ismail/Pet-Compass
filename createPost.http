@@ -1,7 +1,7 @@
 POST http://localhost:3000/pet-owners/zSorour/posts HTTP/1.1
 Content-Type: application/json
-Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZTFmOGFlNTkwNzU5M2RkYmE1NWYiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA3NjU2MDMsImV4cCI6MTY0MDc2OTIwM30.eY0s-aXfhNXTvZRP3Ho71iBbSmfCRBS9LG5i1SVmmd8 
+Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZTFmOGFlNTkwNzU5M2RkYmE1NWYiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA3NzAxMDgsImV4cCI6MTY0MDc3MzcwOH0.uzyWJQakb_7RbaqtK7XsPtjynwUZ-6_UpuZboHDkQ1Q 
 
 {
-    "body":""
+    "body":"Have a good day!"
 }
