@@ -16,8 +16,7 @@ module.exports = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log("error: " + error);
-    res.status(403).json({ error: "Authentication Failed" });
+    return res.status(403).json({ error: "Authentication Failed" });
   }
 
   petOwnerUsername = response.data.username;

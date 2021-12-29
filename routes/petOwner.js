@@ -42,8 +42,8 @@ petOwnerRouter.patch(
 petOwnerRouter.post(
   "/:petOwnerUsername/posts",
   checkPetOwnerAuth,
-  checkPetOwnerValidator.addPostValidator(),
   fileUpload.single("imageURL"),
+  checkPetOwnerValidator.addPostValidator(),
   petOwnerController.createPost
 );
 

@@ -54,14 +54,24 @@ module.exports.addNewPet = async (req, res, next) => {
     });
   }
 
-  petOwner.pets.push({
-    name: petName,
-    type: petType,
-    breed: petBreed,
-    age: petAge,
-    color: petColor,
-    photoURL: petImage || null
-  });
+  if (req.file) {
+    petOwner.pets.push({
+      name: petName,
+      type: petType,
+      breed: petBreed,
+      age: petAge,
+      color: petColor,
+      photoURL: petImage
+    });
+  } else {
+    petOwner.pets.push({
+      name: petName,
+      type: petType,
+      breed: petBreed,
+      age: petAge,
+      color: petColor
+    });
+  }
 
   try {
     await petOwner.save();
@@ -226,22 +236,30 @@ module.exports.createPost = async (req, res, next) => {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
   } catch (error) {
     console.error(err);
-    res.status(422).json({ error: "Could not find pet owner" });
+    return res.status(422).json({ error: "Could not find pet owner" });
   }
 
   const postCreationDate = Date.now();
 
-  petOwner.posts.push({
-    body,
-    publishDate: postCreationDate,
-    imageURL: req.file.path || null
-  });
+  if (req.file) {
+    petOwner.posts.push({
+      body,
+      publishDate: postCreationDate,
+      imageURL: req.file.path
+    });
+  } else {
+    petOwner.posts.push({
+      body,
+      publishDate: postCreationDate
+    });
+  }
 
   try {
     await petOwner.save();
   } catch (error) {
-    res.status(500).send({
-      error: "Server error, could not create your post."
+    return res.status(500).send({
+      error: "Server error, could not create your post.",
+      hehe: error
     });
   }
 
