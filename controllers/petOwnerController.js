@@ -233,7 +233,8 @@ module.exports.createPost = async (req, res, next) => {
 
   petOwner.posts.push({
     body,
-    publishDate: postCreationDate
+    publishDate: postCreationDate,
+    imageURL: req.file.path
   });
 
   try {

@@ -43,6 +43,7 @@ petOwnerRouter.post(
   "/:petOwnerUsername/posts",
   checkPetOwnerAuth,
   checkPetOwnerValidator.addPostValidator(),
+  fileUpload.single("imageURL"),
   petOwnerController.createPost
 );
 
