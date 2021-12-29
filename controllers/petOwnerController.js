@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { validationResult } = require("express-validator");
 const PetOwner = require("../models/PetOwner");
 
 //get specific pet owner profile
@@ -17,6 +17,15 @@ module.exports.getPetOwnerProfile = async (req, res, next) => {
 };
 
 module.exports.addNewPet = async (req, res, next) => {
+  const { errors } = validationResult(req);
+  if (errors.length > 0) {
+    const errorMessages = errors.map((err) => err.msg);
+    return res.status(422).send({
+      message: "Adding a new pet process failed, please try again later.",
+      errors: errorMessages,
+    });
+  }
+
   const { petName, petType, petBreed, petAge, petColor } = req.body;
 
   const petOwnerUsername = req.username;
@@ -28,7 +37,7 @@ module.exports.addNewPet = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({
-      error: "Server error, could not add you pet."
+      error: "Server error, could not add you pet.",
     });
   }
 
@@ -37,25 +46,24 @@ module.exports.addNewPet = async (req, res, next) => {
     type: petType,
     breed: petBreed,
     age: petAge,
-    color: petColor
+    color: petColor,
   });
 
   try {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not add you pet."
+      error: "Server error, could not add you pet.",
     });
   }
 
   res.send({
-    message: "Pet added successfully."
+    message: "Pet added successfully.",
   });
 };
 
 module.exports.getPetOwnerPets = async (req, res, next) => {
   const petOwnerUsername = req.params.petOwnerUsername;
-
   let petOwner;
 
   try {
@@ -87,7 +95,7 @@ module.exports.deletePet = async (req, res, next) => {
     ) === false
   ) {
     return res.status(422).send({
-      error: "Could not find pet."
+      error: "Could not find pet.",
     });
   }
 
@@ -99,17 +107,26 @@ module.exports.deletePet = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not delete your pet."
+      error: "Server error, could not delete your pet.",
     });
   }
 
   res.send({
     message: "Pet removed successfully.",
-    updatedPets: petOwner.pets
+    updatedPets: petOwner.pets,
   });
 };
 
 module.exports.updateProfile = async (req, res, next) => {
+  const { errors } = validationResult(req);
+  if (errors.length > 0) {
+    const errorMessages = errors.map((err) => err.msg);
+    return res.status(422).send({
+      message: "Updating profile process failed, please try again later.",
+      errors: errorMessages
+    })
+  }
+
   const petOwnerUsername = req.username;
 
   const { name, phoneNumber, email } = req.body;
@@ -131,13 +148,13 @@ module.exports.updateProfile = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not update your profile."
+      error: "Server error, could not update your profile.",
     });
   }
 
   res.send({
     message: "Profile updated successfully.",
-    updatedProfile: petOwner
+    updatedProfile: petOwner,
   });
 };
 
@@ -159,20 +176,20 @@ module.exports.createPost = async (req, res, next) => {
 
   petOwner.posts.push({
     body,
-    publishDate: postCreationDate
+    publishDate: postCreationDate,
   });
 
   try {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not create your post."
+      error: "Server error, could not create your post.",
     });
   }
 
   res.send({
     message: "Post created successfully.",
-    posts: petOwner.posts
+    posts: petOwner.posts,
   });
 };
 
@@ -189,7 +206,7 @@ module.exports.getPetOwnerPosts = async (req, res, next) => {
   }
 
   res.send({
-    posts: petOwner.posts
+    posts: petOwner.posts,
   });
 };
 
@@ -212,7 +229,7 @@ module.exports.deletePost = async (req, res, next) => {
     ) === false
   ) {
     return res.status(422).send({
-      error: "Could not find post."
+      error: "Could not find post.",
     });
   }
 
@@ -224,13 +241,13 @@ module.exports.deletePost = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not delete your post."
+      error: "Server error, could not delete your post.",
     });
   }
 
   res.send({
     message: "Post removed successfully.",
-    updatedPosts: petOwner.posts
+    updatedPosts: petOwner.posts,
   });
 };
 
@@ -242,7 +259,7 @@ module.exports.getPetOwners = async (req, res, next) => {
   let petOwners;
   if (petType || petBreed) {
     petOwners = await PetOwner.find({
-      $or: [{ "pets.type": petType }, { "pets.breed": petBreed }]
+      $or: [{ "pets.type": petType }, { "pets.breed": petBreed }],
     });
     try {
     } catch (error) {
@@ -257,6 +274,6 @@ module.exports.getPetOwners = async (req, res, next) => {
   }
 
   res.send({
-    petOwners: petOwners
+    petOwners: petOwners,
   });
 };

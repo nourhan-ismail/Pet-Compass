@@ -14,14 +14,11 @@ petOwnerRouter.get(
   petOwnerController.getPetOwnerPets
 );
 
-//pet-owner can retrive posts of another pet-owner
-
-//pet-owner can add a post on their own profile
-
 //pet-owner can add a new pet on their own profile
 petOwnerRouter.post(
   "/:petOwnerUsername/pets",
   checkPetOwnerAuth,
+  checkPetOwnerAuth.addPetValidator(),
   petOwnerController.addNewPet
 );
 
@@ -35,12 +32,14 @@ petOwnerRouter.delete(
 petOwnerRouter.patch(
   "/:petOwnerUsername",
   checkPetOwnerAuth,
+  (req, res,next) => checkPetOwnerAuth.updatePetOwnerProfileValidator(req, res,next),
   petOwnerController.updateProfile
 );
 
 petOwnerRouter.post(
   "/:petOwnerUsername/posts",
   checkPetOwnerAuth,
+  checkPetOwnerAuth.addPostValidator(),
   petOwnerController.createPost
 );
 
