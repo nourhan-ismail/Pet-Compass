@@ -60,4 +60,8 @@ petOwnerRouter.delete(
 
 petOwnerRouter.get("/", petOwnerController.getPetOwners);
 
+//get nearby vets
+
+petOwnerRouter.get("/nearby-vets",checkPetOwnerAuth,petOwnerController.getNearbyVets);
+
 module.exports = petOwnerRouter;
