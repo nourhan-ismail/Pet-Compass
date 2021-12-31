@@ -18,7 +18,7 @@ module.exports.getPetOwnerProfile = async (req, res, next) => {
     res.status(200).json(petOwner);
   } catch (err) {
     console.error(err);
-    res.status(422).json({ error: "Could not find pet owner" });
+    return res.status(422).json({ error: "Could not find pet owner" });
   }
 };
 
@@ -100,7 +100,7 @@ module.exports.getPetOwnerPets = async (req, res, next) => {
     }
   } catch (err) {
     console.error(err);
-    res.status(422).json({ error: "Could not find pet owner" });
+    return res.status(422).json({ error: "Could not find pet owner" });
   }
 
   res.send(petOwner.pets);
@@ -126,7 +126,7 @@ module.exports.deletePet = async (req, res, next) => {
     }
   } catch (error) {
     console.error(err);
-    res.status(422).json({ error: "Could not find pet owner" });
+    return res.status(422).json({ error: "Could not find pet owner" });
   }
 
   if (
@@ -200,7 +200,7 @@ module.exports.updateProfile = async (req, res, next) => {
     }
   } catch (error) {
     console.error(err);
-    res.status(422).json({ error: "Could not find pet owner" });
+    return res.status(422).json({ error: "Could not find pet owner" });
   }
 
   petOwner.name = name || petOwner.name;
@@ -325,7 +325,7 @@ module.exports.deletePost = async (req, res, next) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(422).json({ error: "Could not find pet owner" });
+    return res.status(422).json({ error: "Could not find pet owner" });
   }
 
   if (
@@ -359,8 +359,6 @@ module.exports.deletePost = async (req, res, next) => {
 module.exports.getPetOwners = async (req, res, next) => {
   const { petType, petBreed } = req.query;
 
-  console.log(req.query);
-
   let petOwners;
   if (petType || petBreed) {
     try {
@@ -371,7 +369,7 @@ module.exports.getPetOwners = async (req, res, next) => {
         throw new Error("Pet Owners not Found.");
       }
     } catch (error) {
-      res.status(422).json({ error: "Could not find pet owners" });
+      return res.status(422).json({ error: "Could not find pet owners" });
     }
   } else {
     try {
@@ -380,7 +378,7 @@ module.exports.getPetOwners = async (req, res, next) => {
         throw new Error("Pet Owner not Found.");
       }
     } catch (error) {
-      res.status(422).json({ error: "Could not find pet owners" });
+      return res.status(422).json({ error: "Could not find pet owners" });
     }
   }
 
@@ -390,18 +388,40 @@ module.exports.getPetOwners = async (req, res, next) => {
 };
 
 module.exports.getNearbyVets = async (req, res, next) => {
-  const { petOwnerLat, petOwnerLng } = req.query;
-  let config = {
-    method: "get",
-    url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY",
-    headers: {}
-  };
+  const petOwnerUsername = req.params.petOwnerUsername;
 
-  axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
+  let petOwner;
+  try {
+    petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(422).json({ error: "Could not find pet owner" });
+  }
+
+  let response;
+
+  try {
+    response = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${petOwner.location.lat}%2C${petOwner.location.lng}&radius=10000&type=veterinary_care&keyword=vet&key=${process.env.GOOGLE_MAPS_PLACES_API_KEY}`
+    );
+  } catch (error) {
+    return res.status(500).send({
+      error: "Server error, please try again later."
     });
+  }
+
+  const placesSummary = response.data.results.map((place) => {
+    return {
+      name: place.name,
+      rating: place.rating,
+      vicinity: place.vicinity
+    };
+  });
+
+  res.send({
+    places: placesSummary
+  });
 };
