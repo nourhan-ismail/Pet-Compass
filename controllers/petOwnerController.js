@@ -43,10 +43,6 @@ module.exports.addNewPet = async (req, res, next) => {
 
   const { petName, petType, petBreed, petAge, petColor } = req.body;
 
-  const petImage = req.file.path;
-
-  console.log(petImage);
-
   let petOwner;
   //get current pet owner
   try {
@@ -68,7 +64,7 @@ module.exports.addNewPet = async (req, res, next) => {
       breed: petBreed,
       age: petAge,
       color: petColor,
-      photoURL: petImage
+      photoURL: req.file.path
     });
   } else {
     petOwner.pets.push({

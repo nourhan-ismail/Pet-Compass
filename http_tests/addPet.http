@@ -1,11 +1,10 @@
-POST http://localhost:3000/pet-owners/zSorour/pets HTTP/1.1
+POST http://localhost:5000/pet-owners/zSorour/pets HTTP/1.1
 Content-Type: application/json
-Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZTFmOGFlNTkwNzU5M2RkYmE1NWYiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA3NzkxMTAsImV4cCI6MTY0MDc4MjcxMH0.fimmtgLtXWO0cWxjYl5e45Xoqf19zWpttgFf5bjYQA8
+Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNjNjhjNDg5NGViZjkwZjE5MzVjNWQiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA5NDIwNDUsImV4cCI6MTY0MDk0NTY0NX0.sYnD__APgBCrcfzNYlNJYsb0N3QlUnqe0A85SGIo2GA
 
 {
     "petName":"oscar",
     "petType": "Cat",
     "petBreed": "Mau",
-    "petAge": "1",
-    "petColor": "red"
+    "petAge": "1"
 }
