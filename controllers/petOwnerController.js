@@ -417,7 +417,8 @@ module.exports.getNearbyVets = async (req, res, next) => {
     return {
       name: place.name,
       rating: place.rating,
-      vicinity: place.vicinity
+      vicinity: place.vicinity,
+      id: place.place_id
     };
   });
 
