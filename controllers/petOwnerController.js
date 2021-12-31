@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 //const multer = require("multer");
 const PetOwner = require("../models/PetOwner");
 const multer = require("multer");
-const axios = require('axios');
+const axios = require("axios");
 
 //get specific pet owner profile
 
@@ -11,7 +11,10 @@ module.exports.getPetOwnerProfile = async (req, res, next) => {
   const petOwnerUsername = req.params.petOwnerUsername;
   try {
     let petOwner = await PetOwner.findOne({ username: petOwnerUsername });
-    console.log(petOwner);
+    petOwners = await PetOwner.find();
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
     res.status(200).json(petOwner);
   } catch (err) {
     console.error(err);
@@ -25,7 +28,7 @@ module.exports.addNewPet = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized access",
+      error: "Unauthorized access"
     });
   }
 
@@ -34,7 +37,7 @@ module.exports.addNewPet = async (req, res, next) => {
     const errorMessages = errors.map((err) => err.msg);
     return res.status(422).send({
       message: "Adding a new pet process failed, please try again later.",
-      errors: errorMessages,
+      errors: errorMessages
     });
   }
 
@@ -48,10 +51,13 @@ module.exports.addNewPet = async (req, res, next) => {
   //get current pet owner
   try {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).send({
-      error: "Server error, could not add your pet.",
+      error: "Server error, could not add your pet."
     });
   }
 
@@ -62,7 +68,7 @@ module.exports.addNewPet = async (req, res, next) => {
       breed: petBreed,
       age: petAge,
       color: petColor,
-      photoURL: petImage,
+      photoURL: petImage
     });
   } else {
     petOwner.pets.push({
@@ -70,7 +76,7 @@ module.exports.addNewPet = async (req, res, next) => {
       type: petType,
       breed: petBreed,
       age: petAge,
-      color: petColor,
+      color: petColor
     });
   }
 
@@ -78,12 +84,12 @@ module.exports.addNewPet = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     return res.status(500).send({
-      error: "Server error, could not add you pet.",
+      error: "Server error, could not add you pet."
     });
   }
 
   res.send({
-    message: "Pet added successfully.",
+    message: "Pet added successfully."
   });
 };
 
@@ -93,6 +99,9 @@ module.exports.getPetOwnerPets = async (req, res, next) => {
 
   try {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
   } catch (err) {
     console.error(err);
     res.status(422).json({ error: "Could not find pet owner" });
@@ -107,7 +116,7 @@ module.exports.deletePet = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized Access",
+      error: "Unauthorized Access"
     });
   }
   const { petID } = req.body;
@@ -116,6 +125,9 @@ module.exports.deletePet = async (req, res, next) => {
 
   try {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
   } catch (error) {
     console.error(err);
     res.status(422).json({ error: "Could not find pet owner" });
@@ -127,7 +139,7 @@ module.exports.deletePet = async (req, res, next) => {
     ) === false
   ) {
     return res.status(422).send({
-      error: "Could not find pet.",
+      error: "Could not find pet."
     });
   }
 
@@ -139,13 +151,13 @@ module.exports.deletePet = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not delete your pet.",
+      error: "Server error, could not delete your pet."
     });
   }
 
   res.send({
     message: "Pet removed successfully.",
-    updatedPets: petOwner.pets,
+    updatedPets: petOwner.pets
   });
 };
 
@@ -155,7 +167,7 @@ module.exports.updateProfile = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized Access",
+      error: "Unauthorized Access"
     });
   }
   const errors = [];
@@ -179,7 +191,7 @@ module.exports.updateProfile = async (req, res, next) => {
   if (errors.length > 0) {
     return res.status(422).send({
       message: "invalid input",
-      errors: errors,
+      errors: errors
     });
   }
 
@@ -187,6 +199,9 @@ module.exports.updateProfile = async (req, res, next) => {
 
   try {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
   } catch (error) {
     console.error(err);
     res.status(422).json({ error: "Could not find pet owner" });
@@ -200,13 +215,13 @@ module.exports.updateProfile = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not update your profile.",
+      error: "Server error, could not update your profile."
     });
   }
 
   res.send({
     message: "Profile updated successfully.",
-    updatedProfile: petOwner,
+    updatedProfile: petOwner
   });
 };
 
@@ -216,7 +231,7 @@ module.exports.createPost = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized Access",
+      error: "Unauthorized Access"
     });
   }
 
@@ -225,7 +240,7 @@ module.exports.createPost = async (req, res, next) => {
     const errorMessages = errors.map((err) => err.msg);
     return res.status(422).send({
       message: "Creating a post process failed, please try again later.",
-      errors: errorMessages,
+      errors: errorMessages
     });
   }
 
@@ -235,6 +250,9 @@ module.exports.createPost = async (req, res, next) => {
 
   try {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
   } catch (error) {
     console.error(err);
     return res.status(422).json({ error: "Could not find pet owner" });
@@ -246,12 +264,12 @@ module.exports.createPost = async (req, res, next) => {
     petOwner.posts.push({
       body,
       publishDate: postCreationDate,
-      imageURL: req.file.path,
+      imageURL: req.file.path
     });
   } else {
     petOwner.posts.push({
       body,
-      publishDate: postCreationDate,
+      publishDate: postCreationDate
     });
   }
 
@@ -260,13 +278,13 @@ module.exports.createPost = async (req, res, next) => {
   } catch (error) {
     return res.status(500).send({
       error: "Server error, could not create your post.",
-      hehe: error,
+      hehe: error
     });
   }
 
   res.send({
     message: "Post created successfully.",
-    posts: petOwner.posts,
+    posts: petOwner.posts
   });
 };
 
@@ -277,13 +295,16 @@ module.exports.getPetOwnerPosts = async (req, res, next) => {
 
   try {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
   } catch (error) {
-    console.error(err);
-    res.status(422).json({ error: "Could not find pet owner" });
+    console.error(error);
+    return res.status(422).json({ error: "Could not find pet owner" });
   }
 
   res.send({
-    posts: petOwner.posts,
+    posts: petOwner.posts
   });
 };
 
@@ -293,7 +314,7 @@ module.exports.deletePost = async (req, res, next) => {
 
   if (petOwnerUsername !== targetPetOwnerUsername) {
     return res.status(401).send({
-      error: "Unauthorized Access",
+      error: "Unauthorized Access"
     });
   }
 
@@ -303,8 +324,11 @@ module.exports.deletePost = async (req, res, next) => {
 
   try {
     petOwner = await PetOwner.findOne({ username: petOwnerUsername });
+    if (!petOwner) {
+      throw new Error("Pet Owner not Found.");
+    }
   } catch (error) {
-    console.error(err);
+    console.error(error);
     res.status(422).json({ error: "Could not find pet owner" });
   }
 
@@ -314,7 +338,7 @@ module.exports.deletePost = async (req, res, next) => {
     ) === false
   ) {
     return res.status(422).send({
-      error: "Could not find post.",
+      error: "Could not find post."
     });
   }
 
@@ -326,13 +350,13 @@ module.exports.deletePost = async (req, res, next) => {
     await petOwner.save();
   } catch (error) {
     res.status(500).send({
-      error: "Server error, could not delete your post.",
+      error: "Server error, could not delete your post."
     });
   }
 
   res.send({
     message: "Post removed successfully.",
-    updatedPosts: petOwner.posts,
+    updatedPosts: petOwner.posts
   });
 };
 
@@ -343,41 +367,45 @@ module.exports.getPetOwners = async (req, res, next) => {
 
   let petOwners;
   if (petType || petBreed) {
-    petOwners = await PetOwner.find({
-      $or: [{ "pets.type": petType }, { "pets.breed": petBreed }],
-    });
     try {
+      petOwners = await PetOwner.find({
+        $or: [{ "pets.type": petType }, { "pets.breed": petBreed }]
+      });
+      if (!petOwners) {
+        throw new Error("Pet Owners not Found.");
+      }
     } catch (error) {
       res.status(422).json({ error: "Could not find pet owners" });
     }
   } else {
-    petOwners = await PetOwner.find();
     try {
+      petOwners = await PetOwner.find();
+      if (!petOwners) {
+        throw new Error("Pet Owner not Found.");
+      }
     } catch (error) {
       res.status(422).json({ error: "Could not find pet owners" });
     }
   }
 
   res.send({
-    petOwners: petOwners,
+    petOwners: petOwners
   });
 };
 
 module.exports.getNearbyVets = async (req, res, next) => {
+  const { petOwnerLat, petOwnerLng } = req.query;
+  let config = {
+    method: "get",
+    url: "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY",
+    headers: {}
+  };
 
-const { petOwnerLat, petOwnerLng } = req.query;
-let config = {
-  method: 'get',
-  url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY',
-  headers: { }
-};
-
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-  console.log(error);
-});
-
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };
