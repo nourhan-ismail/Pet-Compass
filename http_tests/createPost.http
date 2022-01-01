@@ -1,7 +1,7 @@
-POST http://localhost:3000/pet-owners/zSorour/posts HTTP/1.1
+POST http://localhost:5000/pet-owners/nour/posts HTTP/1.1
 Content-Type: application/json
-Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNjNjhjNDg5NGViZjkwZjE5MzVjNWQiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA3ODk1MzMsImV4cCI6MTY0MDc5MzEzM30.s2O3r5ce4NkrdY6-95lO74bESkcxzPktqu9AMAC-Jzk 
+Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNjNzc4MWU2N2YyM2NiYjUwMDNmZmYiLCJ1c2VybmFtZSI6Im5vdXIiLCJpYXQiOjE2NDEwNDAwOTgsImV4cCI6MTY0MTA0MzY5OH0.OUrILQ2y7fzy-MZLm_AFSFUebc2fWQu9zb4SqF-YwJ0 
 
 {
-    "body":"Have a good day"
+    "body":"Hi there!"
 }

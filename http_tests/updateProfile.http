@@ -1,9 +1,9 @@
-PATCH http://localhost:3000/pet-owners/zSorour HTTP/1.1
+PATCH http://localhost:5000/pet-owners/nour HTTP/1.1
 Content-Type: application/json
-Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNhZTFmOGFlNTkwNzU5M2RkYmE1NWYiLCJ1c2VybmFtZSI6InpTb3JvdXIiLCJpYXQiOjE2NDA3NzAxMDgsImV4cCI6MTY0MDc3MzcwOH0.uzyWJQakb_7RbaqtK7XsPtjynwUZ-6_UpuZboHDkQ1Q
+Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2MWNjNzc4MWU2N2YyM2NiYjUwMDNmZmYiLCJ1c2VybmFtZSI6Im5vdXIiLCJpYXQiOjE2NDEwMzYxNjksImV4cCI6MTY0MTAzOTc2OX0.Nr2Ov58pTNbkBnY_AltNDTO3MUVJsPche0XqkTZDpG0
 
 {
-    "name": "Ahmad Sorour",
+    "name": "Nourhan",
     "phoneNumber": "01024661195",
-    "email": "ahmad_sorour@outlook.com"
+    "email": "nourhan123@gmail.com"
 }
